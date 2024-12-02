@@ -1,0 +1,41 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check if release exists
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          if gh release view "$TAG_NAME" &>/dev/null; then
+            echo "::error::Release $TAG_NAME already exists!"
+            exit 1
+          fi
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          MAJOR_VERSION=$(echo $TAG_NAME | grep -o '^v[0-9]\+')
+
+          # Create or update major version tag
+          git tag -fa "${MAJOR_VERSION}" -m "Update ${MAJOR_VERSION} tag"
+          git push origin "${MAJOR_VERSION}" --force
+
+          # Create GitHub release without draft and auto-generate release notes
+          gh release create "$TAG_NAME" \
+            --title "Release $TAG_NAME" \
+            --generate-notes

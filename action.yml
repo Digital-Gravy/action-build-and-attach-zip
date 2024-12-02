@@ -1,0 +1,34 @@
+name: "Build and Upload ZIP"
+description: "Builds a ZIP file and uploads it as an artifact"
+inputs:
+  dist_dir:
+    description: "The distribution directory"
+    required: true
+  plugin_slug:
+    description: "The plugin slug"
+    required: true
+  build_command:
+    description: "The command to build the ZIP file"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check that the ZIP file builds
+      id: build_zip
+      run: ${{ inputs.build_command }}
+      shell: bash
+
+    - name: Test the zip file
+      run: |
+        rm -rf ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
+        mkdir -p ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
+        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}
+      shell: bash
+
+    - name: Upload the zip file as an artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.build_zip.outputs.filename }}
+        path: ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}/**
+        if-no-files-found: error

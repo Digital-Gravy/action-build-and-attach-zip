@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Test the local action
+      - name: Test local action
+        uses: ./
+        with:
+          dist_dir: "test-dist"
+          plugin_slug: "test-plugin"
+          build_command: |
+            mkdir -p test-dist
+            echo "test content" > test-dist/test.txt
+            cd test-dist && zip test-plugin.zip test.txt
+          zip_filename: "test-plugin.zip"
+
+      # Verify the artifact was created
+      - name: Verify artifact
+        run: |
+          if [ ! -f "test-dist/test-plugin/test.txt" ]; then
+            echo "Artifact not found!"
+            exit 1
+          fi
+          if [ "$(cat test-dist/test-plugin/test.txt)" != "test content" ]; then
+            echo "Artifact content mismatch!"
+            exit 1
+          fi
