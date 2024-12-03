@@ -25,12 +25,12 @@ runs:
       run: |
         rm -rf ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
         mkdir -p ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
-        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}.zip
+        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}
       shell: bash
 
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.build_zip.outputs.filename }}.zip
+        name: ${{ steps.build_zip.outputs.filename }}
         path: ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}/**
         if-no-files-found: error
