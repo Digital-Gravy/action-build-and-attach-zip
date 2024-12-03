@@ -21,22 +21,16 @@ runs:
         dist_dir: ${{ inputs.dist_dir }}
         build_command: ${{ inputs.build_command }}
 
-    - name: Debug zip filename
-      run: |
-        echo "Zip file: ${{ steps.build_zip.outputs.zip_file }}" >> $GITHUB_STEP_SUMMARY
-        echo "Zip filename: ${{ steps.build_zip.outputs.filename }}" >> $GITHUB_STEP_SUMMARY
-      shell: bash
-
     - name: Test the zip file
       run: |
         rm -rf ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
         mkdir -p ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
-        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}
+        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}.zip
       shell: bash
 
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.build_zip.outputs.filename }}
+        name: ${{ steps.build_zip.outputs.filename }}.zip
         path: ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}/**
         if-no-files-found: error
