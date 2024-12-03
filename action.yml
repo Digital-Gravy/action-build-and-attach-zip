@@ -28,9 +28,13 @@ runs:
         unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ inputs.dist_dir }}/${{ steps.build_zip.outputs.filename }}
       shell: bash
 
+    - name: Set artifact name
+      id: set_artifact_name
+      run: echo "artifact_name=${{ steps.build_zip.outputs.filename%.zip }}" >> $GITHUB_ENV
+
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ replace(steps.build_zip.outputs.filename, '.zip', '') }}
+        name: ${{ env.artifact_name }}
         path: ${{ steps.build_zip.outputs.zip_file }}
         if-no-files-found: error
