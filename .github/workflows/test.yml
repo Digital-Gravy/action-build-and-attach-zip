@@ -22,6 +22,6 @@ jobs:
           build_command: |
             mkdir -p test-dist
             echo "test content" > test-dist/test.txt
-            cd test-dist && zip test-plugin.zip test.txt
+            zip test-dist/test-plugin.zip test-dist/test.txt
             echo "test-plugin.zip file generated!"
           # The echo "test-plugin.zip file generated!" is needed by Digital-Gravy/action-build-zip-file@v1
