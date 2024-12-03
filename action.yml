@@ -16,8 +16,10 @@ runs:
   steps:
     - name: Check that the ZIP file builds
       id: build_zip
-      run: ${{ inputs.build_command }}
-      shell: bash
+      uses: Digital-Gravy/action-build-zip-file@v1
+      with:
+        dist_dir: ${{ inputs.dist_dir }}
+        build_command: ${{ inputs.build_command }}
 
     - name: Test the zip file
       run: |

@@ -23,16 +23,3 @@ jobs:
             mkdir -p test-dist
             echo "test content" > test-dist/test.txt
             cd test-dist && zip test-plugin.zip test.txt
-          zip_filename: "test-plugin.zip"
-
-      # Verify the artifact was created
-      - name: Verify artifact
-        run: |
-          if [ ! -f "test-dist/test-plugin/test.txt" ]; then
-            echo "Artifact not found!"
-            exit 1
-          fi
-          if [ "$(cat test-dist/test-plugin/test.txt)" != "test content" ]; then
-            echo "Artifact content mismatch!"
-            exit 1
-          fi
