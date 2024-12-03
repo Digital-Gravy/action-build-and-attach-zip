@@ -25,6 +25,7 @@ runs:
       run: |
         echo "Zip file: ${{ steps.build_zip.outputs.zip_file }}"
         echo "Zip filename: ${{ steps.build_zip.outputs.filename }}"
+      shell: bash
 
     - name: Test the zip file
       run: |
