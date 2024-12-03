@@ -21,7 +21,7 @@ jobs:
           plugin_slug: "test-plugin"
           build_command: |
             rm -rf test-dist
-            mkdir -p test-dist
+            mkdir test-dist
             cat > test-dist/plugin.php << 'EOF'
             <?php
             /**
