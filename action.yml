@@ -25,7 +25,7 @@ runs:
       run: |
         rm -rf ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
         mkdir -p ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
-        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ steps.build_zip.outputs.filename }}
+        unzip -d ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }} ./${{ inputs.dist_dir }}/${{ steps.build_zip.outputs.filename }}
       shell: bash
 
     - name: Upload the zip file as an artifact
