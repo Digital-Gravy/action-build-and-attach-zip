@@ -31,6 +31,7 @@ runs:
     - name: Set artifact name
       id: set_artifact_name
       run: echo "artifact_name=${{ steps.build_zip.outputs.filename%.zip }}" >> $GITHUB_ENV
+      shell: bash
 
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
