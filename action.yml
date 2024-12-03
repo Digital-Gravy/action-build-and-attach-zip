@@ -23,8 +23,8 @@ runs:
 
     - name: Debug zip filename
       run: |
-        echo "Zip file: ${{ steps.build_zip.outputs.zip_file }}"
-        echo "Zip filename: ${{ steps.build_zip.outputs.filename }}"
+        echo "Zip file: ${{ steps.build_zip.outputs.zip_file }}" >> $GITHUB_STEP_SUMMARY
+        echo "Zip filename: ${{ steps.build_zip.outputs.filename }}" >> $GITHUB_STEP_SUMMARY
       shell: bash
 
     - name: Test the zip file
