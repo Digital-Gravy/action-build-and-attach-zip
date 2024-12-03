@@ -31,6 +31,6 @@ runs:
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.build_zip.outputs.filename }}
+        name: ${{ replace(steps.build_zip.outputs.filename, '.zip', '') }}
         path: ${{ steps.build_zip.outputs.zip_file }}
         if-no-files-found: error
