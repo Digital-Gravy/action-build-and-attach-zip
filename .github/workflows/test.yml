@@ -21,7 +21,17 @@ jobs:
           plugin_slug: "test-plugin"
           build_command: |
             mkdir -p test-dist
+            cat > test-dist/plugin.php << 'EOF'
+            <?php
+            /**
+             * Plugin Name: Test Plugin
+             * Version: 1.0.0
+             * Description: A test plugin
+             * Author: Test Author
+             * License: GPL v2 or later
+             */
+            EOF
             echo "test content" > test-dist/test.txt
-            zip test-dist/test-plugin.zip test-dist/test.txt
-            printf "test-plugin.zip file generated!\n"
+            zip -r test-plugin-1.0.0.zip test-dist
+            printf "test-plugin-1.0.0.zip file generated!\n"
           # The echo "test-plugin.zip file generated!" is needed by Digital-Gravy/action-build-zip-file@v1
