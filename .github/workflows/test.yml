@@ -23,5 +23,5 @@ jobs:
             mkdir -p test-dist
             echo "test content" > test-dist/test.txt
             zip test-dist/test-plugin.zip test-dist/test.txt
-            echo "test-plugin.zip file generated!"
+            printf "test-plugin.zip file generated!\n"
           # The echo "test-plugin.zip file generated!" is needed by Digital-Gravy/action-build-zip-file@v1
