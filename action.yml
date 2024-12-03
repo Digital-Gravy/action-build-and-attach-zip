@@ -30,12 +30,12 @@ runs:
 
     - name: Set artifact name
       id: set_artifact_name
-      run: echo "artifact_name=${{ steps.build_zip.outputs.filename%.zip }}" >> $GITHUB_ENV
+      run: echo "artifact_name=$(echo ${{ steps.build_zip.outputs.filename }} | sed 's/\.zip$//')" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Upload the zip file as an artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ env.artifact_name }}
+        name: ${{ steps.set_artifact_name.outputs.artifact_name }}
         path: ${{ steps.build_zip.outputs.zip_file }}
         if-no-files-found: error
