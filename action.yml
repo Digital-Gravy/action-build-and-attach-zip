@@ -32,5 +32,5 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.build_zip.outputs.filename }}
-        path: ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}/**
+        path: ${{ steps.build_zip.outputs.zip_file }}
         if-no-files-found: error
