@@ -10,6 +10,10 @@ inputs:
   build_command:
     description: "The command to build the ZIP file"
     required: true
+  include_hidden_files:
+    description: "Whether to include hidden files in the ZIP file"
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -39,3 +43,4 @@ runs:
         name: ${{ steps.set_artifact_name.outputs.artifact_name }}
         path: ./${{ inputs.dist_dir }}/${{ inputs.plugin_slug }}
         if-no-files-found: error
+        include-hidden-files: ${{ inputs.include_hidden_files }}
