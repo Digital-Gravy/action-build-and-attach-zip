@@ -27,11 +27,13 @@ Add the following step to your workflow:
 
 ### Inputs
 
-| Input           | Description                                    | Required | Default |
-| --------------- | ---------------------------------------------- | -------- | ------- |
-| `dist_dir`      | Directory where the ZIP file will be generated | Yes      | -       |
-| `plugin_slug`   | Slug/name for the plugin or package            | Yes      | -       |
-| `build_command` | Command to execute to build the ZIP file       | Yes      | -       |
+| Input                  | Description                                    | Required | Default |
+| ---------------------- | ---------------------------------------------- | -------- | ------- |
+| `dist_dir`             | Directory where the ZIP file will be generated | Yes      | -       |
+| `plugin_slug`          | Slug/name for the plugin or package            | Yes      | -       |
+| `build_command`        | Command to execute to build the ZIP file       | Yes      | -       |
+| `include_hidden_files` | Whether to include hidden files in the ZIP file | No      | `false` |
+
 
 ### Example Workflow
 
